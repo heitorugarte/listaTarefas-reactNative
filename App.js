@@ -15,7 +15,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.tituloApp}>Tarefas Bizuradas!</Text>
+        <Text style={styles.tituloApp}>Tarefy</Text>
         <Header />
         <AddTarefaModal />
         <DetalhesTarefaModal />
