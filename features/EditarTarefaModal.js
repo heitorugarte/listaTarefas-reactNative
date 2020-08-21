@@ -11,44 +11,40 @@ import {
   Alert
 } from "react-native";
 
-const AddTarefaModal = props => {
-  console.log("PROPS");
-  console.log(props);
-  let novaTarefa = props.novaTarefa;
-  console.log("NOVA TAREFA");
-  console.log(novaTarefa);
+const EditarTarefaModal = props => {
+  let tarefaEditando = { ...props.tarefaEditando };
   return (
     <Modal
       animationType="slide"
-      visible={props.addTarefaModalVisible}
+      visible={props.editarTarefaModalVisible}
       style={styles.modal}
       transparent={true}
     >
       <View style={styles.modalCenteredView}>
         <View style={styles.modalView}>
           <View style={styles.modalContentView}>
-            <Text style={styles.modalTitle}>
-              Insira os dados da nova tarefa:
-            </Text>
+            <Text style={styles.modalTitle}>Altere os dados da Tarefa:</Text>
             <View style={styles.inputTextView}>
-              <TextInput
+              <TextInput // INPUT DESCRICAO
                 style={styles.inputText}
                 placeholder="Descrição..."
                 onChangeText={text => {
-                  novaTarefa.descricao = text;
+                  tarefaEditando.descricao = text;
                 }}
-              ></TextInput>
+              >
+                {tarefaEditando.descricao}
+              </TextInput>
             </View>
             <View style={styles.pickerView}>
               <Text style={styles.modalPickerLabel}>Situação:</Text>
-              <Picker
+              <Picker //ALTERAR VALOR DROPDOWN SITUACAO
                 style={styles.modalPicker}
-                selectedValue={novaTarefa.situacao}
+                selectedValue={tarefaEditando.situacao}
                 onValueChange={(itemValue, itemIndex) => {
-                  novaTarefa.situacao = itemValue;
+                  tarefaEditando.situacao = itemValue;
                   props.dispatch({
-                    type: "adicionarModal/updateDisplay",
-                    novaTarefa: novaTarefa
+                    type: "editarModal/updateDisplay",
+                    tarefaEditando: tarefaEditando
                   });
                 }}
               >
@@ -60,15 +56,16 @@ const AddTarefaModal = props => {
             <TouchableHighlight
               style={styles.btConfirmaAdd}
               onPress={() => {
+                //CONFIRMA EDICAO, DISPATCH NOVA TAREFA
                 if (
-                  novaTarefa.descricao != "" &&
-                  novaTarefa.descricao != undefined
+                  tarefaEditando.descricao != "" &&
+                  tarefaEditando.descricao != undefined
                 ) {
                   props.dispatch({
-                    type: "tarefas/add",
-                    novaTarefa: novaTarefa
+                    type: "tarefas/edit",
+                    tarefaEditando: tarefaEditando
                   });
-                  fecharModalAddTarefa(props.dispatch);
+                  fecharModalEditTarefa(props.dispatch);
                 } else {
                   Alert.alert("Erro", "Informe uma descrição para a tarefa.");
                 }
@@ -81,7 +78,7 @@ const AddTarefaModal = props => {
             <TouchableHighlight
               style={styles.btCancelaAdd}
               onPress={() => {
-                fecharModalAddTarefa(props.dispatch);
+                fecharModalEditTarefa(props.dispatch);
               }}
             >
               <View style={styles.viewBotaoCancelaAdd}>
@@ -95,18 +92,18 @@ const AddTarefaModal = props => {
   );
 };
 
-const mapAddTarefaModalProps = state => {
+const mapEditTarefaModalProps = state => {
   return {
-    addTarefaModalVisible: state.addTarefaModalVisible,
-    novaTarefa: state.novaTarefa
+    editarTarefaModalVisible: state.editarTarefaModalVisible,
+    tarefaEditando: state.tarefaEditando
   };
 };
 
-export default connect(mapAddTarefaModalProps)(AddTarefaModal);
+export default connect(mapEditTarefaModalProps)(EditarTarefaModal);
 
-const fecharModalAddTarefa = dispatch => {
+const fecharModalEditTarefa = dispatch => {
   dispatch({
-    type: "adicionarModal/hide"
+    type: "editarModal/hide"
   });
 };
 
@@ -122,7 +119,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
-    borderRadius: 10,
     elevation: 32
   },
   viewBotaoConfirmaAdd: {

@@ -1,40 +1,89 @@
-const listaInicial = [
-  { id: 0, descricao: "Tarefa 1", situacao: "A fazer" },
-  { id: 1, descricao: "Tarefa 2", situacao: "Concluído" }
-];
+const listaInicial = [];
 
 export default function reducer(
   state = {
     listaTarefas: listaInicial,
-    visible: false,
-    selectedSituacaoPicker: "A fazer"
+    addTarefaModalVisible: false,
+    detalhesTarefaModalVisible: false,
+    editarTarefaModalVisible: false,
+    novaTarefa: { id: 0, descricao: "", situacao: "A fazer" },
+    tarefaEditando: { id: 0, descricao: "", situacao: "" },
+    tarefa: { id: 0, descricao: "", situacao: "" }
   },
   action
 ) {
   switch (action.type) {
     case "tarefas/add":
-      let novaTarefa = action.tarefa;
+      let novaTarefa = action.novaTarefa;
       let novaLista = [...state.listaTarefas];
+      novaTarefa.id = novaLista.length + 1;
       novaLista.push(novaTarefa);
-      console.log(novaLista);
       return {
         ...state,
         listaTarefas: novaLista
       };
-    case "modal/show":
+    case "tarefas/delete":
+      novaLista = [...state.listaTarefas];
+      let tarefaExcluida = action.tarefa;
+      novaLista.pop(tarefaExcluida);
       return {
         ...state,
-        visible: true
+        listaTarefas: novaLista
       };
-    case "modal/hide":
+    case "tarefas/edit":
+      let novaListaEditada = [...state.listaTarefas];
+      let indice = novaListaEditada.findIndex(tarefa => {
+        return tarefa.id == action.tarefaEditando.id;
+      });
+      novaListaEditada[indice] = action.tarefaEditando;
       return {
         ...state,
-        visible: false
+        editarTarefaModalVisible: false,
+        listaTarefas: novaListaEditada
       };
-    case "situacaoPicker/select":
+    case "adicionarModal/updateDisplay":
       return {
         ...state,
-        selectedSituacaoPicker: action.selected
+        novaTarefa: { ...action.novaTarefa }
+      };
+    case "adicionarModal/show":
+      return {
+        ...state,
+        addTarefaModalVisible: true,
+        novaTarefa: { id: 0, descricao: "", situacao: "A fazer" }
+      };
+    case "adicionarModal/hide":
+      return {
+        ...state,
+        addTarefaModalVisible: false
+      };
+    case "editarModal/updateDisplay":
+      return {
+        ...state,
+        tarefaEditando: { ...action.tarefaEditando }
+      };
+
+    case "detalhesModal/show":
+      return {
+        ...state,
+        detalhesTarefaModalVisible: true,
+        tarefa: action.tarefa
+      };
+    case "detalhesModal/hide":
+      return {
+        ...state,
+        detalhesTarefaModalVisible: false
+      };
+    case "editarModal/show":
+      return {
+        ...state,
+        editarTarefaModalVisible: true,
+        tarefaEditando: { ...action.tarefa }
+      };
+    case "editarModal/hide":
+      return {
+        ...state,
+        editarTarefaModalVisible: false
       };
     default:
       return state;

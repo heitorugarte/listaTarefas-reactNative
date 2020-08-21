@@ -15,7 +15,7 @@ const Header = props => {
         style={styles.btAdicionar}
         onPress={() => {
           props.dispatch({
-            type: "modal/show"
+            type: "adicionarModal/show"
           });
         }}
       >
