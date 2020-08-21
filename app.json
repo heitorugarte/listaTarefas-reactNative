@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Tarefas Bizu",
+    "name": "Tarefy",
     "slug": "native-tarefas",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icone.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,14 +17,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.heitorugarte.tarefy"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.heitorugarte.tarefasbizu",
+      "package": "com.heitorugarte.tarefy",
       "versionCode": 1
-    }
+    },
+    "sdkVersion": "38.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
