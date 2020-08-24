@@ -12,11 +12,7 @@ import {
 } from "react-native";
 
 const AddTarefaModal = props => {
-  console.log("PROPS");
-  console.log(props);
   let novaTarefa = props.novaTarefa;
-  console.log("NOVA TAREFA");
-  console.log(novaTarefa);
   return (
     <Modal
       animationType="slide"

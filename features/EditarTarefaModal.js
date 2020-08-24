@@ -25,7 +25,7 @@ const EditarTarefaModal = props => {
           <View style={styles.modalContentView}>
             <Text style={styles.modalTitle}>Altere os dados da Tarefa:</Text>
             <View style={styles.inputTextView}>
-              <TextInput // INPUT DESCRICAO
+              <TextInput
                 style={styles.inputText}
                 placeholder="Descrição..."
                 onChangeText={text => {
@@ -37,7 +37,7 @@ const EditarTarefaModal = props => {
             </View>
             <View style={styles.pickerView}>
               <Text style={styles.modalPickerLabel}>Situação:</Text>
-              <Picker //ALTERAR VALOR DROPDOWN SITUACAO
+              <Picker
                 style={styles.modalPicker}
                 selectedValue={tarefaEditando.situacao}
                 onValueChange={(itemValue, itemIndex) => {
@@ -56,7 +56,6 @@ const EditarTarefaModal = props => {
             <TouchableHighlight
               style={styles.btConfirmaAdd}
               onPress={() => {
-                //CONFIRMA EDICAO, DISPATCH NOVA TAREFA
                 if (
                   tarefaEditando.descricao != "" &&
                   tarefaEditando.descricao != undefined
